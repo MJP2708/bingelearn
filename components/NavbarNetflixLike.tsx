@@ -25,7 +25,8 @@ export function NavbarNetflixLike() {
   const pathname = usePathname();
   const navItems = [
     { key: "home", label: "Home", href: "/" },
-    { key: "subjects", label: "Subjects", href: "/lessons" },
+    { key: "school-levels", label: "School Levels", href: "/subjects" },
+    { key: "university-prep", label: "University Prep", href: "/subjects#university-prep" },
     { key: "tutors", label: "Tutors", href: "/tutors" },
     { key: "my-list", label: "My List", href: "/student" },
   ] as const;
@@ -43,7 +44,15 @@ export function NavbarNetflixLike() {
                 key={item.key}
                 href={item.href}
                 className={
-                  pathname === item.href || (item.href !== "/" && pathname.startsWith(item.href))
+                  item.key === "school-levels"
+                    ? pathname === "/subjects" || pathname.startsWith("/subjects/")
+                      ? "text-white"
+                      : "text-zinc-400 transition hover:text-white"
+                    : item.key === "university-prep"
+                      ? pathname.startsWith("/faculties")
+                        ? "text-white"
+                        : "text-zinc-400 transition hover:text-white"
+                      : pathname === item.href || (item.href !== "/" && pathname.startsWith(item.href))
                     ? "text-white"
                     : "text-zinc-400 transition hover:text-white"
                 }
