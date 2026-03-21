@@ -14,7 +14,7 @@ type BookingListProps = {
 export function BookingList({ bookings, emptyMessage }: BookingListProps) {
   if (!bookings.length) {
     return (
-      <div className="surface-card rounded-[1.75rem] border-dashed p-6 text-sm text-zinc-400">
+      <div className="surface-card rounded-[1.75rem] border-dashed p-6 text-sm text-slate-600">
         {emptyMessage}
       </div>
     );
@@ -26,14 +26,14 @@ export function BookingList({ bookings, emptyMessage }: BookingListProps) {
         <div key={booking.id} className="surface-card rounded-[1.75rem] p-5">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div>
-              <p className="text-sm font-semibold text-white">
+              <p className="text-sm font-semibold text-slate-900">
                 {booking.lesson?.title ?? "Custom tutoring session"} with {booking.tutor.name}
               </p>
-              <p className="text-sm text-zinc-400">{formatDateTime(booking.startTime)}</p>
+              <p className="text-sm text-slate-600">{formatDateTime(booking.startTime)}</p>
             </div>
-            <div className="text-sm text-zinc-300">
-              <p className="mb-1 capitalize text-red-200">{booking.status.toLowerCase()}</p>
-              <a href={booking.meetingUrl} className="text-[var(--color-accent-soft)] underline-offset-4 hover:underline">
+            <div className="text-sm text-slate-700">
+              <p className="mb-1 capitalize text-amber-700">{booking.status.toLowerCase()}</p>
+              <a href={booking.meetingUrl} className="text-[var(--color-accent)] underline-offset-4 hover:underline">
                 Meeting link
               </a>
             </div>

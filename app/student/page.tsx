@@ -25,7 +25,7 @@ const tutors: Tutor[] = [
     level: "Middle School",
     rating: 4.9,
     reviews: 312,
-    hourlyRate: 28,
+    hourlyRate: 950,
     students: 1240,
     intro: "Explains tricky concepts with visual shortcuts and weekly practice plans.",
     tags: ["Exam Prep", "Homework Help", "Beginner Friendly"],
@@ -37,7 +37,7 @@ const tutors: Tutor[] = [
     level: "High School",
     rating: 4.8,
     reviews: 201,
-    hourlyRate: 35,
+    hourlyRate: 1200,
     students: 860,
     intro: "Problem-solving focused sessions for AP Physics and fundamentals.",
     tags: ["AP Physics", "STEM", "Past Papers"],
@@ -49,7 +49,7 @@ const tutors: Tutor[] = [
     level: "Test Prep",
     rating: 4.7,
     reviews: 178,
-    hourlyRate: 32,
+    hourlyRate: 1100,
     students: 710,
     intro: "Helps students build confidence in reading and writing with measurable goals.",
     tags: ["SAT", "Reading", "Writing"],
@@ -61,7 +61,7 @@ const tutors: Tutor[] = [
     level: "High School",
     rating: 4.9,
     reviews: 265,
-    hourlyRate: 40,
+    hourlyRate: 1350,
     students: 950,
     intro: "Specializes in breaking down complex topics into practical step-by-step methods.",
     tags: ["Calculus AB", "Calculus BC", "Advanced"],
@@ -71,11 +71,11 @@ const tutors: Tutor[] = [
 const subjects = ["All", "Algebra", "Physics", "SAT Verbal", "Calculus"];
 const levels = ["All", "Middle School", "High School", "Test Prep"];
 
-export default function StudentTutorFinderPage() {
+export default function StudentHomePage() {
   const [query, setQuery] = useState("");
   const [subject, setSubject] = useState("All");
   const [level, setLevel] = useState("All");
-  const [maxRate, setMaxRate] = useState(50);
+  const [maxRate, setMaxRate] = useState(1500);
 
   const filteredTutors = useMemo(() => {
     return tutors.filter((tutor) => {
@@ -95,20 +95,93 @@ export default function StudentTutorFinderPage() {
 
   return (
     <div className={styles.page}>
+      <header className={styles.navbar}>
+        <div className={styles.container}>
+          <div className={styles.navInner}>
+            <Link href="/" className={styles.logo}>
+              <span>Binge</span>Learn Students
+            </Link>
+            <div className={styles.navActions}>
+              <Link href="/lessons" className={styles.ghostButton}>
+                Browse lessons
+              </Link>
+              <Link href="/dashboard" className={styles.primaryButton}>
+                Start learning
+              </Link>
+            </div>
+          </div>
+        </div>
+      </header>
+
       <section className={styles.hero}>
         <div className={styles.container}>
-          <Link href="/" className={styles.backLink}>
-            Back to home
-          </Link>
-          <h1>Find your perfect tutor</h1>
-          <p>
-            Discover high-impact tutors by subject, level, and budget. Preview ratings, teaching style, and social proof before booking a trial.
-          </p>
+          <div className={styles.heroGrid}>
+            <div>
+              <p className={styles.kicker}>Built for ambitious students</p>
+              <h1>Level up faster with tutors that match your goals.</h1>
+              <p>
+                BingeLearn Student gives you curated learning paths, trusted tutors, and measurable progress so every study hour drives real outcomes.
+              </p>
+              <div className={styles.heroCtas}>
+                <Link href="/lessons" className={styles.primaryButton}>
+                  Explore learning paths
+                </Link>
+                <a href="#find-tutors" className={styles.secondaryButton}>
+                  Find tutors now
+                </a>
+              </div>
+            </div>
+            <aside className={styles.statsCard}>
+              <h3>What students unlock</h3>
+              <ul>
+                <li>
+                  <strong>3x</strong> faster prep cycles with guided paths
+                </li>
+                <li>
+                  <strong>2,900+</strong> tutor sessions booked monthly
+                </li>
+                <li>
+                  <strong>4.8/5</strong> average session satisfaction
+                </li>
+              </ul>
+            </aside>
+          </div>
         </div>
       </section>
 
-      <section className={styles.searchSection}>
+      <section className={styles.section}>
         <div className={styles.container}>
+          <h2>Student plans in Thai baht</h2>
+          <p className={styles.subtext}>Start free and upgrade when you want deeper mentorship, premium tracks, and priority support.</p>
+          <div className={styles.planGrid}>
+            <article className={styles.planCard}>
+              <h3>Explorer</h3>
+              <p className={styles.price}>฿0</p>
+              <ul>
+                <li>Access to free lesson catalog</li>
+                <li>Basic tutor discovery</li>
+                <li>Community study resources</li>
+              </ul>
+            </article>
+            <article className={`${styles.planCard} ${styles.planFeatured}`}>
+              <p className={styles.badge}>Best for exam prep</p>
+              <h3>Student Plus</h3>
+              <p className={styles.price}>฿490/month</p>
+              <ul>
+                <li>Premium structured learning tracks</li>
+                <li>Priority tutor matching</li>
+                <li>Progress analytics and weak-topic alerts</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section className={styles.section} id="find-tutors">
+        <div className={styles.container}>
+          <h2>Find your perfect tutor</h2>
+          <p className={styles.subtext}>Filter by subject, level, and budget, then book your first session in minutes.</p>
+
           <div className={styles.filterPanel}>
             <div className={styles.searchBox}>
               <label htmlFor="search">Search tutors</label>
@@ -145,14 +218,14 @@ export default function StudentTutorFinderPage() {
               </label>
 
               <label>
-                Max rate (${maxRate}/hr)
-                <input type="range" min={15} max={50} value={maxRate} onChange={(event) => setMaxRate(Number(event.target.value))} />
+                Max rate (฿{maxRate}/hr)
+                <input type="range" min={600} max={1500} step={50} value={maxRate} onChange={(event) => setMaxRate(Number(event.target.value))} />
               </label>
             </div>
           </div>
 
           <div className={styles.resultsHeader}>
-            <h2>{filteredTutors.length} tutors found</h2>
+            <h3>{filteredTutors.length} tutors found</h3>
             <p>Top matches based on your filters</p>
           </div>
 
@@ -162,9 +235,9 @@ export default function StudentTutorFinderPage() {
                 <div className={styles.cardTop}>
                   <div className={styles.avatar}>{tutor.name.slice(0, 2).toUpperCase()}</div>
                   <div>
-                    <h3>{tutor.name}</h3>
+                    <h4>{tutor.name}</h4>
                     <p>
-                      {tutor.subject} · {tutor.level}
+                      {tutor.subject} - {tutor.level}
                     </p>
                   </div>
                 </div>
@@ -185,20 +258,30 @@ export default function StudentTutorFinderPage() {
 
                 <div className={styles.cardBottom}>
                   <p>
-                    <strong>${tutor.hourlyRate}</strong>/hour
+                    <strong>฿{tutor.hourlyRate}</strong>/hour
                   </p>
                   <div className={styles.actions}>
-                    <button type="button" className={styles.secondaryButton}>
+                    <Link href="/tutors" className={styles.secondaryButton}>
                       View profile
-                    </button>
-                    <button type="button" className={styles.primaryButton}>
+                    </Link>
+                    <Link href="/tutors" className={styles.primaryButton}>
                       Book trial
-                    </button>
+                    </Link>
                   </div>
                 </div>
               </article>
             ))}
           </div>
+        </div>
+      </section>
+
+      <section className={`${styles.section} ${styles.ctaSection}`}>
+        <div className={styles.container}>
+          <h2>Ready to binge-learn with confidence?</h2>
+          <p>Join thousands of students improving grades and exam scores with BingeLearn.</p>
+          <Link href="/dashboard" className={styles.primaryButton}>
+            Start as student
+          </Link>
         </div>
       </section>
     </div>

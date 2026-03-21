@@ -33,9 +33,9 @@ const faqItems = [
 ];
 
 const topCourses = [
-  { title: "Algebra Crash Sprint", price: "$29", enrollments: 1240 },
-  { title: "SAT Verbal in 7 Days", price: "$39", enrollments: 860 },
-  { title: "Physics Problem Bootcamp", price: "$35", enrollments: 710 },
+  { title: "Algebra Crash Sprint", price: "฿990", enrollments: 1240 },
+  { title: "SAT Verbal in 7 Days", price: "฿1,290", enrollments: 860 },
+  { title: "Physics Problem Bootcamp", price: "฿1,150", enrollments: 710 },
 ];
 
 export default function HomePage() {
@@ -96,7 +96,7 @@ export default function HomePage() {
               <div className={styles.dashboardStats}>
                 <div>
                   <p className={styles.statLabel}>Monthly earnings</p>
-                  <p className={styles.statValue}>$8,420</p>
+                  <p className={styles.statValue}>฿284,000</p>
                 </div>
                 <div>
                   <p className={styles.statLabel}>Active students</p>
@@ -182,7 +182,7 @@ export default function HomePage() {
           <div className={styles.pricingGrid}>
             <article className={styles.pricingCard}>
               <h3>Free starter</h3>
-              <p className={styles.price}>$0</p>
+              <p className={styles.price}>฿0</p>
               <ul>
                 <li>Up to 3 courses</li>
                 <li>Basic analytics</li>
@@ -192,7 +192,7 @@ export default function HomePage() {
             <article className={`${styles.pricingCard} ${styles.proCard}`}>
               <p className={styles.badge}>Most popular</p>
               <h3>Pro tutor</h3>
-              <p className={styles.price}>$19/month</p>
+              <p className={styles.price}>฿690/month</p>
               <ul>
                 <li>Unlimited courses</li>
                 <li>Better discovery placement</li>

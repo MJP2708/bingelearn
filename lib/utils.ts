@@ -5,15 +5,15 @@ export function cn(...classes: Array<string | false | null | undefined>) {
 }
 
 export function formatCurrency(amount: number) {
-  return new Intl.NumberFormat("en-US", {
+  return new Intl.NumberFormat("th-TH", {
     style: "currency",
-    currency: "USD",
+    currency: "THB",
     maximumFractionDigits: 0,
   }).format(amount);
 }
 
 export function formatDateTime(value: Date | string) {
-  return new Intl.DateTimeFormat("en-US", {
+  return new Intl.DateTimeFormat("th-TH", {
     dateStyle: "medium",
     timeStyle: "short",
   }).format(typeof value === "string" ? new Date(value) : value);

@@ -19,18 +19,23 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
 
   return (
     <div className="space-y-10">
+      <section className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-indigo-600">Admin Console</p>
+        <h1 className="mt-2 text-3xl font-black tracking-[-0.04em] text-slate-900">Platform operations at a glance</h1>
+        <p className="mt-2 max-w-2xl text-sm text-slate-600">Review users, approve tutors, and monitor marketplace health from one place.</p>
+      </section>
       <section className="grid gap-4 md:grid-cols-3">
-        <div className="rounded-3xl border border-white/10 bg-white/5 p-6">
-          <p className="text-sm text-slate-400">Users</p>
-          <p className="mt-2 text-3xl font-semibold text-white">{metrics.users}</p>
+        <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+          <p className="text-sm text-slate-500">Users</p>
+          <p className="mt-2 text-3xl font-semibold text-slate-900">{metrics.users}</p>
         </div>
-        <div className="rounded-3xl border border-white/10 bg-white/5 p-6">
-          <p className="text-sm text-slate-400">Bookings</p>
-          <p className="mt-2 text-3xl font-semibold text-white">{metrics.bookings}</p>
+        <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+          <p className="text-sm text-slate-500">Bookings</p>
+          <p className="mt-2 text-3xl font-semibold text-slate-900">{metrics.bookings}</p>
         </div>
-        <div className="rounded-3xl border border-white/10 bg-white/5 p-6">
-          <p className="text-sm text-slate-400">Revenue</p>
-          <p className="mt-2 text-3xl font-semibold text-white">{formatCurrency(metrics.revenue)}</p>
+        <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+          <p className="text-sm text-slate-500">Revenue</p>
+          <p className="mt-2 text-3xl font-semibold text-slate-900">{formatCurrency(metrics.revenue)}</p>
         </div>
       </section>
 
@@ -40,25 +45,25 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
           description="Filter platform users by role and review associated profile state."
           action={
             <form>
-              <select name="role" defaultValue={role ?? "ALL"} className="rounded-full border border-white/10 bg-slate-950 px-4 py-2 text-sm text-white outline-none">
+              <select name="role" defaultValue={role ?? "ALL"} className="rounded-full border border-slate-300 bg-white px-4 py-2 text-sm text-slate-900 outline-none">
                 <option value="ALL">All roles</option>
                 <option value="STUDENT">Students</option>
                 <option value="TUTOR">Tutors</option>
                 <option value="ADMIN">Admins</option>
               </select>
-              <button className="ml-3 rounded-full bg-white px-4 py-2 text-sm font-medium text-slate-950">Filter</button>
+              <button className="ml-3 rounded-full bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700">Filter</button>
             </form>
           }
         />
         <div className="space-y-3">
           {users.map((user) => (
-            <div key={user.id} className="rounded-3xl border border-white/10 bg-white/5 p-5">
+            <div key={user.id} className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
               <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                 <div>
-                  <p className="text-sm font-medium text-white">{user.name ?? user.email}</p>
-                  <p className="text-sm text-slate-300">{user.email}</p>
+                  <p className="text-sm font-medium text-slate-900">{user.name ?? user.email}</p>
+                  <p className="text-sm text-slate-600">{user.email}</p>
                 </div>
-                <span className="rounded-full bg-white/10 px-3 py-1 text-xs uppercase tracking-[0.18em] text-slate-200">{user.role}</span>
+                <span className="rounded-full bg-slate-100 px-3 py-1 text-xs uppercase tracking-[0.18em] text-slate-700">{user.role}</span>
               </div>
             </div>
           ))}
@@ -69,13 +74,13 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
         <SectionHeader title="Tutor approvals" description="Approve or reject tutor applications through a single boolean state for the MVP." />
         <div className="space-y-3">
           {tutorProfiles.map((profile) => (
-            <div key={profile.id} className="flex flex-col gap-4 rounded-3xl border border-white/10 bg-white/5 p-5 sm:flex-row sm:items-center sm:justify-between">
+            <div key={profile.id} className="flex flex-col gap-4 rounded-3xl border border-slate-200 bg-white p-5 shadow-sm sm:flex-row sm:items-center sm:justify-between">
               <div>
-                <p className="text-sm font-medium text-white">{profile.user.name}</p>
-                <p className="text-sm text-slate-300">{profile.headline}</p>
+                <p className="text-sm font-medium text-slate-900">{profile.user.name}</p>
+                <p className="text-sm text-slate-600">{profile.headline}</p>
               </div>
               <div className="flex items-center gap-3">
-                <span className="rounded-full bg-white/10 px-3 py-1 text-xs text-slate-200">
+                <span className="rounded-full bg-slate-100 px-3 py-1 text-xs text-slate-700">
                   {profile.isApproved ? "Approved" : "Pending"}
                 </span>
                 <ApproveTutorForm tutorProfileId={profile.id} isApproved={profile.isApproved} />
