@@ -1,61 +1,46 @@
 "use client";
 
-import { useState } from "react";
-import { signIn } from "next-auth/react";
+import { useMemo, useState } from "react";
 
 type LoginFormProps = {
   callbackUrl: string;
 };
 
+type DemoRole = "student" | "tutor" | "admin";
+
+const roleRoutes: Record<DemoRole, string> = {
+  student: "/student",
+  tutor: "/tutor/dashboard",
+  admin: "/admin",
+};
+
 export function LoginForm({ callbackUrl }: LoginFormProps) {
-  const [error, setError] = useState<string | null>(null);
-  const [pending, setPending] = useState(false);
-
-  async function handleSubmit(formData: FormData) {
-    setPending(true);
-    setError(null);
-
-    const email = formData.get("email");
-    const password = formData.get("password");
-
-    const result = await signIn("credentials", {
-      email,
-      password,
-      callbackUrl,
-      redirect: false,
-    });
-
-    setPending(false);
-
-    if (result?.error) {
-      setError("Incorrect email or password.");
-      return;
+  const [role, setRole] = useState<DemoRole>("student");
+  const destination = useMemo(() => {
+    if (callbackUrl.startsWith("/") && callbackUrl !== "/auth/redirect") {
+      return callbackUrl;
     }
 
-    window.location.href = result?.url ?? callbackUrl;
-  }
+    return roleRoutes[role];
+  }, [callbackUrl, role]);
 
   return (
-    <form action={handleSubmit} className="space-y-4">
+    <form action={destination} className="space-y-4">
       <label className="block space-y-2">
-        <span className="text-sm text-zinc-300">Email</span>
-        <input name="email" type="email" required className="w-full rounded-2xl border border-white/10 bg-black/50 px-4 py-3 text-white outline-none ring-0 transition focus:border-[var(--color-accent)]/50" />
+        <span className="text-sm text-zinc-300">Demo role</span>
+        <select
+          name="role"
+          value={role}
+          onChange={(event) => setRole(event.target.value as DemoRole)}
+          className="w-full rounded-2xl border border-white/10 bg-black/50 px-4 py-3 text-white outline-none transition focus:border-[var(--color-accent)]/50"
+        >
+          <option value="student">Student</option>
+          <option value="tutor">Tutor</option>
+          <option value="admin">Admin</option>
+        </select>
       </label>
-      <label className="block space-y-2">
-        <span className="text-sm text-zinc-300">Password</span>
-        <input name="password" type="password" required className="w-full rounded-2xl border border-white/10 bg-black/50 px-4 py-3 text-white outline-none ring-0 transition focus:border-[var(--color-accent)]/50" />
-      </label>
-      {error ? <p className="text-sm text-rose-300">{error}</p> : null}
-      <button disabled={pending} className="netflix-button w-full rounded-full px-5 py-3 font-semibold transition">
-        {pending ? "Signing in..." : "Sign in"}
-      </button>
-      <button
-        type="button"
-        onClick={() => signIn("google", { callbackUrl })}
-        className="netflix-button-secondary w-full rounded-full px-5 py-3 font-semibold transition"
-      >
-        Continue with Google
-      </button>
+      <p className="text-sm text-zinc-400">Auth is disabled in demo mode. Continue directly to explore that role&apos;s dashboard.</p>
+      <button className="netflix-button w-full rounded-full px-5 py-3 font-semibold transition">Continue as {role}</button>
     </form>
   );
 }

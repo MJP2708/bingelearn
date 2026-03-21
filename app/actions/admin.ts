@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { updateMockTutorApproval } from "@/lib/mock-data";
 import { isMockMode } from "@/lib/mock-mode";
 import { prisma } from "@/lib/prisma";
 import { requireAdmin } from "@/lib/rbac";
@@ -15,8 +16,10 @@ export async function updateTutorApproval(formData: FormData) {
   }
 
   if (isMockMode()) {
+    updateMockTutorApproval(tutorProfileId, isApproved);
     revalidatePath("/admin");
     revalidatePath("/tutors");
+    revalidatePath(`/tutors/${tutorProfileId}`);
     return;
   }
 

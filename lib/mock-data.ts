@@ -430,3 +430,140 @@ export function getMockUserForRole(role: UserRole) {
 
   return mockStudentUser;
 }
+
+let mockSequence = 1000;
+
+function nextMockId(prefix: string) {
+  mockSequence += 1;
+  return `${prefix}-${mockSequence}`;
+}
+
+export function createMockLesson(input: {
+  tutorId: string;
+  title: string;
+  description: string;
+  subjectId: string;
+  difficulty: LessonDifficulty;
+  durationMinutes: number;
+  isPublished: boolean;
+}) {
+  const subject = mockSubjects.find((item) => item.id === input.subjectId) ?? mockSubjects[0];
+  const tutorUser = mockTutorUsers.find((item) => item.id === input.tutorId) ?? mockTutorUsers[0];
+  const tutorProfile = mockTutorProfiles.find((item) => item.userId === tutorUser.id) ?? mockTutorProfiles[0];
+
+  const lesson = {
+    id: nextMockId("lesson"),
+    tutorId: tutorUser.id,
+    subjectId: subject.id,
+    title: input.title,
+    description: input.description,
+    difficulty: input.difficulty,
+    isPublished: input.isPublished,
+    durationMinutes: input.durationMinutes,
+    createdAt: new Date(),
+    subject,
+    tutor: {
+      ...tutorUser,
+      tutorProfile,
+    },
+  };
+
+  mockLessons.unshift(lesson);
+  return lesson;
+}
+
+export function updateMockLessonPublish(lessonId: string, tutorId: string, isPublished: boolean) {
+  const lesson = mockLessons.find((item) => item.id === lessonId && item.tutorId === tutorId);
+
+  if (!lesson) {
+    return false;
+  }
+
+  lesson.isPublished = isPublished;
+  return true;
+}
+
+export function deleteMockLesson(lessonId: string, tutorId: string) {
+  const index = mockLessons.findIndex((item) => item.id === lessonId && item.tutorId === tutorId);
+
+  if (index === -1) {
+    return false;
+  }
+
+  mockLessons.splice(index, 1);
+  return true;
+}
+
+export function createMockAvailabilitySlot(input: { tutorId: string; startsAt: Date; endsAt: Date }) {
+  const profile = mockTutorProfiles.find((item) => item.userId === input.tutorId) ?? mockTutorProfiles[0];
+  const slot = {
+    id: nextMockId("slot"),
+    tutorProfileId: profile.id,
+    startsAt: input.startsAt,
+    endsAt: input.endsAt,
+  };
+
+  profile.availability.push(slot);
+  return slot;
+}
+
+export function deleteMockAvailabilitySlot(slotId: string) {
+  for (const profile of mockTutorProfiles) {
+    const index = profile.availability.findIndex((slot) => slot.id === slotId);
+
+    if (index !== -1) {
+      profile.availability.splice(index, 1);
+      return true;
+    }
+  }
+
+  return false;
+}
+
+export function createMockBooking(input: {
+  studentId: string;
+  tutorId: string;
+  lessonId: string | null;
+  startTime: Date;
+  endTime: Date;
+  meetingUrl: string;
+}) {
+  const lesson = input.lessonId ? mockLessons.find((item) => item.id === input.lessonId) : undefined;
+  const tutorUser = mockTutorUsers.find((item) => item.id === input.tutorId) ?? mockTutorUsers[0];
+  const tutorProfile = mockTutorProfiles.find((item) => item.userId === tutorUser.id) ?? mockTutorProfiles[0];
+
+  const booking = {
+    id: nextMockId("booking"),
+    studentId: input.studentId,
+    tutorId: input.tutorId,
+    lessonId: input.lessonId,
+    startTime: input.startTime,
+    endTime: input.endTime,
+    status: BookingStatus.PENDING,
+    meetingUrl: input.meetingUrl,
+    lesson:
+      lesson ??
+      ({
+        ...mockLessons[0],
+      } as (typeof mockLessons)[number]),
+    tutor: {
+      ...tutorUser,
+      tutorProfile,
+    },
+    student: mockStudentUser,
+  };
+
+  mockBookings.unshift(booking);
+  return booking;
+}
+
+export function updateMockTutorApproval(tutorProfileId: string, isApproved: boolean) {
+  const profile = mockTutorProfiles.find((item) => item.id === tutorProfileId);
+
+  if (!profile) {
+    return false;
+  }
+
+  profile.isApproved = isApproved;
+  return true;
+}

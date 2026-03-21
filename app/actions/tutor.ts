@@ -1,28 +1,46 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { LessonDifficulty } from "@prisma/client";
+import { createMockAvailabilitySlot, createMockLesson, deleteMockAvailabilitySlot, deleteMockLesson, updateMockLessonPublish } from "@/lib/mock-data";
 import { isMockMode } from "@/lib/mock-mode";
 import { prisma } from "@/lib/prisma";
 import { requireTutor } from "@/lib/rbac";
 
 export async function createLesson(formData: FormData) {
   const tutor = await requireTutor();
+  const title = formData.get("title")?.toString() ?? "";
+  const description = formData.get("description")?.toString() ?? "";
+  const subjectId = formData.get("subjectId")?.toString() ?? "";
+  const difficulty = (formData.get("difficulty")?.toString() ?? "BEGINNER") as LessonDifficulty;
+  const durationMinutes = Number(formData.get("durationMinutes")?.toString() ?? "60");
+  const isPublished = formData.get("isPublished")?.toString() === "true";
 
   if (isMockMode()) {
+    createMockLesson({
+      tutorId: tutor.id,
+      title,
+      description,
+      subjectId,
+      difficulty,
+      durationMinutes,
+      isPublished,
+    });
     revalidatePath("/tutor/lessons");
     revalidatePath("/lessons");
+    revalidatePath(`/tutors/${tutor.tutorProfile?.id ?? ""}`);
     return;
   }
 
   await prisma.lesson.create({
     data: {
       tutorId: tutor.id,
-      title: formData.get("title")?.toString() ?? "",
-      description: formData.get("description")?.toString() ?? "",
-      subjectId: formData.get("subjectId")?.toString() ?? "",
-      difficulty: (formData.get("difficulty")?.toString() ?? "BEGINNER") as "BEGINNER" | "INTERMEDIATE" | "ADVANCED",
-      durationMinutes: Number(formData.get("durationMinutes")?.toString() ?? "60"),
-      isPublished: formData.get("isPublished")?.toString() === "true",
+      title,
+      description,
+      subjectId,
+      difficulty,
+      durationMinutes,
+      isPublished,
     },
   });
 
@@ -40,8 +58,10 @@ export async function toggleLessonPublish(formData: FormData) {
   }
 
   if (isMockMode()) {
+    updateMockLessonPublish(lessonId, tutor.id, isPublished);
     revalidatePath("/tutor/lessons");
     revalidatePath("/lessons");
+    revalidatePath(`/tutors/${tutor.tutorProfile?.id ?? ""}`);
     return;
   }
 
@@ -68,8 +88,10 @@ export async function deleteLesson(formData: FormData) {
   }
 
   if (isMockMode()) {
+    deleteMockLesson(lessonId, tutor.id);
     revalidatePath("/tutor/lessons");
     revalidatePath("/lessons");
+    revalidatePath(`/tutors/${tutor.tutorProfile?.id ?? ""}`);
     return;
   }
 
@@ -86,9 +108,15 @@ export async function deleteLesson(formData: FormData) {
 
 export async function createAvailabilitySlot(formData: FormData) {
   const tutor = await requireTutor();
+  const startsAt = new Date(formData.get("startsAt")?.toString() ?? "");
+  const endsAt = new Date(formData.get("endsAt")?.toString() ?? "");
 
   if (isMockMode()) {
+    if (!Number.isNaN(startsAt.getTime()) && !Number.isNaN(endsAt.getTime()) && endsAt > startsAt) {
+      createMockAvailabilitySlot({ tutorId: tutor.id, startsAt, endsAt });
+    }
     revalidatePath("/tutor/availability");
+    revalidatePath(`/tutors/${tutor.tutorProfile?.id ?? ""}`);
     return;
   }
 
@@ -121,6 +149,7 @@ export async function deleteAvailabilitySlot(formData: FormData) {
   }
 
   if (isMockMode()) {
+    deleteMockAvailabilitySlot(slotId);
     revalidatePath("/tutor/availability");
     return;
   }

@@ -17,14 +17,14 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
       <div className="p-8">
         <div className="mb-6 space-y-2">
           <p className="text-xs font-bold uppercase tracking-[0.28em] text-[var(--color-accent-soft)]">Welcome back</p>
-          <h1 className="text-4xl font-black tracking-[-0.04em] text-white">Sign in</h1>
-          <p className="text-sm leading-6 text-zinc-400">Use email/password or Google OAuth to access the correct dashboard for your role.</p>
+          <h1 className="text-4xl font-black tracking-[-0.04em] text-white">Enter demo</h1>
+          <p className="text-sm leading-6 text-zinc-400">Auth is disabled. Pick a role and continue directly to that part of the app.</p>
         </div>
         <LoginForm callbackUrl={safeCallbackUrl} />
         <p className="mt-6 text-sm text-zinc-400">
-          Need an account?{" "}
+          Need a fast start?{" "}
           <Link href="/register" className="text-[var(--color-accent-soft)]">
-            Create one
+            Open demo shortcuts
           </Link>
         </p>
       </div>

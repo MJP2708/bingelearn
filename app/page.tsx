@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import styles from "./page.module.css";
 
 const faqItems = [
@@ -59,8 +60,12 @@ export default function HomePage() {
               <a href="#faq">FAQ</a>
             </nav>
             <div className={styles.navCtas}>
-              <button className={styles.ghostButton}>Sign in</button>
-              <button className={styles.primaryButton}>Join as Tutor</button>
+              <Link href="/login" className={styles.ghostButton}>
+                Sign in
+              </Link>
+              <Link href="/tutor/dashboard" className={styles.primaryButton}>
+                Join as Tutor
+              </Link>
             </div>
           </div>
         </div>
@@ -77,8 +82,12 @@ export default function HomePage() {
                 binge-learn on demand.
               </p>
               <div className={styles.heroActions}>
-                <button className={styles.primaryButton}>Join as Tutor</button>
-                <button className={styles.secondaryButton}>Explore courses</button>
+                <Link href="/tutor/dashboard" className={styles.primaryButton}>
+                  Join as Tutor
+                </Link>
+                <Link href="/student" className={styles.secondaryButton}>
+                  Explore courses
+                </Link>
               </div>
               <p className={styles.heroNote}>Freemium to start - Commission only when you earn</p>
             </div>
@@ -159,7 +168,9 @@ export default function HomePage() {
                 <span>SAT Math</span>
               </div>
               <p className={styles.rating}>4.9 stars (312 reviews)</p>
-              <button className={styles.secondaryButton}>Follow</button>
+              <Link href="/student" className={styles.secondaryButton}>
+                Follow
+              </Link>
             </aside>
           </div>
         </div>
@@ -225,7 +236,9 @@ export default function HomePage() {
         <div className={styles.container}>
           <h2>Ready to launch your tutoring brand?</h2>
           <p>Join BingeLearn as an early-stage tutor and help us shape the future of learning.</p>
-          <button className={styles.primaryButton}>Apply as early tutor</button>
+          <Link href="/tutor/dashboard" className={styles.primaryButton}>
+            Apply as early tutor
+          </Link>
         </div>
       </section>
 

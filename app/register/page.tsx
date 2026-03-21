@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { RegisterForm } from "@/components/forms/RegisterForm";
 
 export default function RegisterPage() {
   return (
@@ -8,14 +7,26 @@ export default function RegisterPage() {
       <div className="p-8">
         <div className="mb-6 space-y-2">
           <p className="text-xs font-bold uppercase tracking-[0.28em] text-[var(--color-accent-soft)]">Start watching</p>
-          <h1 className="text-4xl font-black tracking-[-0.04em] text-white">Create your account</h1>
-          <p className="text-sm leading-6 text-zinc-400">Students get personalized recommendations. Tutors get a profile, lesson tools, and approval flow.</p>
+          <h1 className="text-4xl font-black tracking-[-0.04em] text-white">Demo mode enabled</h1>
+          <p className="text-sm leading-6 text-zinc-400">
+            Registration is disabled for the fully-operational demo experience. Use role shortcuts to explore the platform without auth or database setup.
+          </p>
         </div>
-        <RegisterForm />
+        <div className="space-y-3">
+          <Link href="/student" className="netflix-button block w-full rounded-full px-5 py-3 text-center font-semibold transition">
+            Continue as Student
+          </Link>
+          <Link href="/tutor/dashboard" className="netflix-button-secondary block w-full rounded-full px-5 py-3 text-center font-semibold transition">
+            Continue as Tutor
+          </Link>
+          <Link href="/admin" className="netflix-button-secondary block w-full rounded-full px-5 py-3 text-center font-semibold transition">
+            Continue as Admin
+          </Link>
+        </div>
         <p className="mt-6 text-sm text-zinc-400">
-          Already have an account?{" "}
+          Want the quick role switcher?{" "}
           <Link href="/login" className="text-[var(--color-accent-soft)]">
-            Sign in
+            Open sign in
           </Link>
         </p>
       </div>

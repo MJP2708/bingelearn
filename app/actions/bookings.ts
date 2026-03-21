@@ -3,6 +3,7 @@
 import { addMinutes } from "date-fns";
 import { revalidatePath } from "next/cache";
 import { generateMeetingUrl } from "@/lib/meeting";
+import { createMockBooking } from "@/lib/mock-data";
 import { isMockMode } from "@/lib/mock-mode";
 import { prisma } from "@/lib/prisma";
 import { requireStudent } from "@/lib/rbac";
@@ -18,13 +19,26 @@ export async function createBooking(formData: FormData) {
     return;
   }
 
+  const startTime = new Date(startTimeRaw);
+  const endTime = addMinutes(startTime, durationMinutes);
+  const meetingUrl = generateMeetingUrl();
+
   if (isMockMode()) {
+    if (!Number.isNaN(startTime.getTime())) {
+      createMockBooking({
+        studentId: student.id,
+        tutorId,
+        lessonId,
+        startTime,
+        endTime,
+        meetingUrl,
+      });
+    }
     revalidatePath("/dashboard");
+    revalidatePath("/student");
     revalidatePath(`/tutors/${tutorId}`);
     return;
   }
-
-  const startTime = new Date(startTimeRaw);
 
   await prisma.booking.create({
     data: {
@@ -32,9 +46,9 @@ export async function createBooking(formData: FormData) {
       tutorId,
       lessonId,
       startTime,
-      endTime: addMinutes(startTime, durationMinutes),
+      endTime,
       status: "PENDING",
-      meetingUrl: generateMeetingUrl(),
+      meetingUrl,
     },
   });
 
