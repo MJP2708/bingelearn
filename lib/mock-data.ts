@@ -528,7 +528,8 @@ export function createMockBooking(input: {
   endTime: Date;
   meetingUrl: string;
 }) {
-  const lesson = input.lessonId ? mockLessons.find((item) => item.id === input.lessonId) : undefined;
+  const lessonId = input.lessonId ?? mockLessons[0].id;
+  const lesson = mockLessons.find((item) => item.id === lessonId);
   const tutorUser = mockTutorUsers.find((item) => item.id === input.tutorId) ?? mockTutorUsers[0];
   const tutorProfile = mockTutorProfiles.find((item) => item.userId === tutorUser.id) ?? mockTutorProfiles[0];
 
@@ -536,7 +537,7 @@ export function createMockBooking(input: {
     id: nextMockId("booking"),
     studentId: input.studentId,
     tutorId: input.tutorId,
-    lessonId: input.lessonId,
+    lessonId,
     startTime: input.startTime,
     endTime: input.endTime,
     status: BookingStatus.PENDING,
