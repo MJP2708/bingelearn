@@ -24,6 +24,9 @@ export default async function TutorAvailabilityPage() {
           <Link href="/tutor/availability" className="rounded-full bg-indigo-600 px-4 py-2 text-sm font-semibold text-white">
             Availability
           </Link>
+          <Link href="/tutor/wallet" className="rounded-full border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50">
+            Wallet
+          </Link>
         </div>
       </section>
       <SectionHeader title="Availability" description="Simple persisted time slots for the MVP booking flow." />

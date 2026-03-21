@@ -31,6 +31,9 @@ export default async function TutorDashboardPage() {
           <Link href="/tutor/availability" className="rounded-full border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50">
             Availability
           </Link>
+          <Link href="/tutor/wallet" className="rounded-full border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50">
+            Wallet
+          </Link>
         </div>
       </section>
       <section className="grid gap-4 md:grid-cols-3">
