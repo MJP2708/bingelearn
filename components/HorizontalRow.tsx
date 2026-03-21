@@ -12,7 +12,7 @@ type HorizontalRowProps = {
 
 function Arrow({ direction }: { direction: "left" | "right" }) {
   return (
-    <svg viewBox="0 0 24 24" fill="none" className="size-6">
+    <svg viewBox="0 0 24 24" fill="none" className="size-5">
       <path
         d={direction === "left" ? "M14.5 5L8 12L14.5 19" : "M9.5 5L16 12L9.5 19"}
         stroke="currentColor"
@@ -29,39 +29,45 @@ export function HorizontalRow({ title, items, onMoreInfo }: HorizontalRowProps) 
 
   function scrollByPage(direction: "left" | "right") {
     scrollerRef.current?.scrollBy({
-      left: direction === "left" ? -900 : 900,
+      left: direction === "left" ? -720 : 720,
       behavior: "smooth",
     });
   }
 
   return (
     <section className="space-y-4">
-      <h2 className="text-2xl font-bold tracking-[-0.03em] text-white">{title}</h2>
-      <div className="group relative">
-        <button
-          type="button"
-          aria-label={`Scroll ${title} left`}
-          onClick={() => scrollByPage("left")}
-          className="absolute left-0 top-1/2 z-10 hidden -translate-y-1/2 rounded-r-xl bg-black/70 px-3 py-10 text-white transition hover:bg-black/85 md:block"
-        >
-          <Arrow direction="left" />
-        </button>
-        <div
-          ref={scrollerRef}
-          className="flex snap-x gap-4 overflow-x-auto scroll-smooth pb-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-        >
-          {items.map((item, index) => (
-            <ContentCard key={`${title}-${item.kind}-${item.id}-${index}`} item={item} onMoreInfo={onMoreInfo} />
-          ))}
+      <div className="flex items-center justify-between gap-3">
+        <div>
+          <h2 className="text-2xl font-black tracking-[-0.04em] text-slate-950 sm:text-3xl">{title}</h2>
+          <p className="mt-1 text-sm text-slate-500">Quick picks for your next focused study block.</p>
         </div>
-        <button
-          type="button"
-          aria-label={`Scroll ${title} right`}
-          onClick={() => scrollByPage("right")}
-          className="absolute right-0 top-1/2 z-10 hidden -translate-y-1/2 rounded-l-xl bg-black/70 px-3 py-10 text-white transition hover:bg-black/85 md:block"
-        >
-          <Arrow direction="right" />
-        </button>
+        <div className="hidden items-center gap-2 md:flex">
+          <button
+            type="button"
+            aria-label={`Scroll ${title} left`}
+            onClick={() => scrollByPage("left")}
+            className="flex size-11 items-center justify-center rounded-full border border-white/70 bg-white/80 text-slate-700 transition hover:bg-white hover:text-slate-950"
+          >
+            <Arrow direction="left" />
+          </button>
+          <button
+            type="button"
+            aria-label={`Scroll ${title} right`}
+            onClick={() => scrollByPage("right")}
+            className="flex size-11 items-center justify-center rounded-full border border-white/70 bg-white/80 text-slate-700 transition hover:bg-white hover:text-slate-950"
+          >
+            <Arrow direction="right" />
+          </button>
+        </div>
+      </div>
+
+      <div
+        ref={scrollerRef}
+        className="flex snap-x gap-4 overflow-x-auto scroll-px-1 scroll-smooth pb-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+      >
+        {items.map((item, index) => (
+          <ContentCard key={`${title}-${item.kind}-${item.id}-${index}`} item={item} onMoreInfo={onMoreInfo} />
+        ))}
       </div>
     </section>
   );

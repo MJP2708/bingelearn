@@ -1,11 +1,16 @@
 import type { Metadata } from "next";
+import { Poppins } from "next/font/google";
 import { AuthProvider } from "@/components/AuthProvider";
-import { NavbarNetflixLike } from "@/components/NavbarNetflixLike";
 import "./globals.css";
+
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+});
 
 export const metadata: Metadata = {
   title: "BingeLearn",
-  description: "Netflix-style tutoring with role-based dashboards, lessons, bookings, and subscriptions.",
+  description: "Creator-style tutoring marketplace landing page.",
 };
 
 export default async function RootLayout({
@@ -15,12 +20,9 @@ export default async function RootLayout({
 }>) {
   return (
     <html lang="en" className="h-full antialiased">
-      <body className="min-h-full bg-[var(--color-background)] text-white">
+      <body className={`${poppins.className} min-h-full bg-[var(--color-background)] text-[var(--color-foreground)]`}>
         <AuthProvider>
-          <NavbarNetflixLike />
-          <div className="mx-auto flex min-h-screen max-w-[96rem] flex-col px-4 pt-24 sm:px-6 md:pt-28 lg:px-8">
-            <main className="flex-1 py-8">{children}</main>
-          </div>
+          <main>{children}</main>
         </AuthProvider>
       </body>
     </html>

@@ -22,9 +22,9 @@ export function NetflixRowsExperience({ hero, heroEyebrow, rowLabel, rows }: Net
   const [selectedItem, setSelectedItem] = useState<ContentItem | null>(null);
 
   return (
-    <div className="space-y-10">
+    <div className="space-y-8 sm:space-y-10">
       <HeroBanner item={hero} eyebrow={heroEyebrow} rowLabel={rowLabel} />
-      <div className="space-y-10">
+      <div className="space-y-8 sm:space-y-10">
         {rows.map((row) => (
           <HorizontalRow key={row.title} title={row.title} items={row.items} onMoreInfo={setSelectedItem} />
         ))}

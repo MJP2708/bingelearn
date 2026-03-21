@@ -52,9 +52,9 @@ export interface ContentItem {
 
 function pickHeroGradient(seed: string) {
   const gradients = [
-    "linear-gradient(135deg, rgba(229,9,20,0.78), rgba(20,20,20,0.6) 45%, rgba(20,20,20,0.9) 100%)",
-    "linear-gradient(135deg, rgba(164,22,26,0.82), rgba(18,18,18,0.7) 44%, rgba(8,8,8,0.95) 100%)",
-    "linear-gradient(135deg, rgba(81,20,24,0.88), rgba(22,22,22,0.72) 48%, rgba(9,9,9,0.96) 100%)",
+    "linear-gradient(135deg, rgba(37,99,235,0.92), rgba(56,189,248,0.72) 44%, rgba(255,255,255,0.22) 100%)",
+    "linear-gradient(135deg, rgba(124,58,237,0.9), rgba(59,130,246,0.72) 44%, rgba(255,255,255,0.24) 100%)",
+    "linear-gradient(135deg, rgba(245,158,11,0.88), rgba(236,72,153,0.64) 44%, rgba(255,255,255,0.24) 100%)",
   ];
 
   const index = seed.length % gradients.length;
