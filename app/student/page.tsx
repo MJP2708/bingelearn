@@ -151,26 +151,26 @@ export default function StudentHomePage() {
 
       <section className={styles.section}>
         <div className={styles.container}>
-          <h2>Student plans in Thai baht</h2>
-          <p className={styles.subtext}>Start free and upgrade when you want deeper mentorship, premium tracks, and priority support.</p>
+          <h2>Student pricing: buy lessons on demand</h2>
+          <p className={styles.subtext}>No recurring student subscription. Buy only the lessons or packs you need.</p>
           <div className={styles.planGrid}>
             <article className={styles.planCard}>
-              <h3>Explorer</h3>
-              <p className={styles.price}>฿0</p>
+              <h3>Starter lesson pack</h3>
+              <p className={styles.price}>THB 490</p>
               <ul>
-                <li>Access to free lesson catalog</li>
+                <li>3 on-demand lesson unlocks</li>
                 <li>Basic tutor discovery</li>
                 <li>Community study resources</li>
               </ul>
             </article>
             <article className={`${styles.planCard} ${styles.planFeatured}`}>
-              <p className={styles.badge}>Best for exam prep</p>
-              <h3>Student Plus</h3>
-              <p className={styles.price}>฿490/month</p>
+              <p className={styles.badge}>Most value</p>
+              <h3>Exam sprint pack</h3>
+              <p className={styles.price}>THB 1,490</p>
               <ul>
-                <li>Premium structured learning tracks</li>
+                <li>10 lesson unlocks plus AI quiz bundle</li>
                 <li>Priority tutor matching</li>
-                <li>Progress analytics and weak-topic alerts</li>
+                <li>Weak-topic alerts and progress insights</li>
               </ul>
             </article>
           </div>
@@ -218,7 +218,7 @@ export default function StudentHomePage() {
               </label>
 
               <label>
-                Max rate (฿{maxRate}/hr)
+                Max rate (THB {maxRate}/hr)
                 <input type="range" min={600} max={1500} step={50} value={maxRate} onChange={(event) => setMaxRate(Number(event.target.value))} />
               </label>
             </div>
@@ -258,7 +258,7 @@ export default function StudentHomePage() {
 
                 <div className={styles.cardBottom}>
                   <p>
-                    <strong>฿{tutor.hourlyRate}</strong>/hour
+                    <strong>THB {tutor.hourlyRate}</strong>/hour
                   </p>
                   <div className={styles.actions}>
                     <Link href="/tutors" className={styles.secondaryButton}>

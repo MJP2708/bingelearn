@@ -50,9 +50,11 @@ export default async function StudentDashboardPage() {
           <p className="mt-2 text-3xl font-semibold text-slate-900">{lessons.length}</p>
         </div>
         <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
-          <p className="text-sm text-slate-500">Plan status</p>
-          <p className="mt-2 text-lg font-semibold text-slate-900">{subscription?.status === "active" ? "Student Plus Active" : "Free Explorer"}</p>
-          <p className="mt-1 text-xs text-slate-500">Renews {subscription?.currentPeriodEnd ? formatDateTime(subscription.currentPeriodEnd) : "anytime"}</p>
+          <p className="text-sm text-slate-500">Payment model</p>
+          <p className="mt-2 text-lg font-semibold text-slate-900">On-demand lessons</p>
+          <p className="mt-1 text-xs text-slate-500">
+            Last wallet update: {subscription?.currentPeriodEnd ? formatDateTime(subscription.currentPeriodEnd) : "not available"}
+          </p>
         </div>
       </section>
 
@@ -66,7 +68,7 @@ export default async function StudentDashboardPage() {
                   <div>
                     <p className="font-semibold text-slate-900">{lesson.title}</p>
                     <p className="text-sm text-slate-600">
-                      {lesson.subject.name} · {lesson.durationMinutes} min · {lesson.difficulty.toLowerCase()}
+                      {lesson.subject.name} - {lesson.durationMinutes} min - {lesson.difficulty.toLowerCase()}
                     </p>
                   </div>
                   <Link href="/lessons" className="rounded-full bg-indigo-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-indigo-700">
@@ -86,9 +88,7 @@ export default async function StudentDashboardPage() {
                 <p className="font-semibold text-slate-900">{tutor.user.name}</p>
                 <p className="text-sm text-slate-600">{tutor.headline ?? "Personalized tutoring support"}</p>
                 <div className="mt-3 flex items-center justify-between">
-                  <p className="text-xs text-slate-500">
-                    {tutor.ratingAverage.toFixed(1)} stars · {tutor.ratingCount} reviews
-                  </p>
+                  <p className="text-xs text-slate-500">{tutor.ratingAverage.toFixed(1)} stars - {tutor.ratingCount} reviews</p>
                   <Link href="/student" className="rounded-full border border-slate-300 px-3 py-1 text-xs font-semibold text-slate-700 hover:bg-white">
                     Book trial
                   </Link>
